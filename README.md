@@ -130,7 +130,7 @@ STORED AS PARQUET
 TBLPROPERTIES("parquet.compression"="SNAPPY");
 ```
 
-E inserir os dados das tabelas externas para as tabelas gerenciadas. Essa etapa será um pouco demorada pois a temos muitos dados de logs à serem carregados.
+E vamos inserir os dados das tabelas externas para as tabelas gerenciadas. Essa etapa será um pouco demorada pois temos muitos dados de logs à serem carregados.
 
 ```SQL
 INSERT INTO produtos SELECT url, categoria FROM ex_produtos;
@@ -138,7 +138,7 @@ INSERT INTO usuarios SELECT * FROM ex_usuarios;
 INSERT INTO omniturelogs SELECT * FROM ex_omniture;
 ```
 
-Agora não precisamos mais das tabelas externas, então vamos executar um drop nelas.
+Não precisamos mais das tabelas externas, então vamos executar um drop nelas.
 
 ```SQL
 DROP TABLE ex_produtos;
@@ -146,7 +146,7 @@ DROP TABLE ex_usuarios;
 DROP TABLE ex_omniture;
 ```
 
-A tabela de omniturelogs possue muitas conlunas, vamos dar uma olhada e ver se podemos pegar somente as colunas que fazem sentido para nosso trabalho. 
+A tabela de omniturelogs possue muitas conlunas, vamos ver se podemos pegar somente as colunas que fazem sentido para nosso trabalho. 
 ```SQL
 !set outputformat vertical
 SELECT * FROM omniturelogs LIMIT 1
@@ -154,7 +154,7 @@ SELECT * FROM omniturelogs LIMIT 1
 
 ![omniturelogs](https://github.com/BrunoHarlis/loja_de_varejo_na_web/blob/main/imagens/omniturelogs.png)
 
-Vamos criar uma view, pegar apenas as colunas que s'ao relevantes e renomea-las para facilitar consultas futuras.
+Vamos criar uma view, pegar apenas as colunas que são relevantes e renomea-las para facilitar consultas futuras.
 ```
 COLUNAS SELECIONADAS: col_2: horario
                       col_8: ip
