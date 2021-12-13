@@ -1,7 +1,7 @@
 ------------------------------------------------------------
 -- CRIANDO O DATABASE LOJA_WEB
 ------------------------------------------------------------
-DROP DATABASE IF EXISTS loja_web;
+DROP DATABASE IF EXISTS loja_web CASCADE;
 
 CREATE DATABASE loja_web;
 
@@ -142,7 +142,7 @@ DROP TABLE ex_omniture;
 DROP VIEW IF EXISTS loja_web.omniture;
 
 CREATE VIEW loja_web.omniture AS
-SELECT col_2 ts, col_8 ip, col_13 url, col_14 swid, col_50 city,
-col_51 country, col_53 state
+SELECT col_2 horario, col_8 ip, col_13 url, col_14 swid, col_50 cidade,
+col_51 pais, col_53 estado
 FROM loja_web.omniturelogs;
 
