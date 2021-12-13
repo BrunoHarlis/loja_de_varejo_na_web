@@ -175,4 +175,30 @@ FROM loja_web.omniturelogs;
 
 ![omniture_view](https://github.com/BrunoHarlis/loja_de_varejo_na_web/blob/main/imagens/view_omniture.png)
 
+## Unir dados de várias tabelas
 
+Agora vamos pegar campos específicos de diferentes tabelas e criar uma tabela personalizada a partir deles.
+```SQL
+CREATE TABLE IF NOT EXISTS loja_web.analise_logs
+STORED AS PARQUET
+AS
+SELECT to_date(o.data) data_log, o.url, o.ip, o.cidade, upper(o.estado) estado,
+o.pais, p.categoria, CAST(datediff(from_unixtime(unix_timestamp()),
+from_unixtime(unix_timestamp(u.aniversario, 'dd-MMM-yy'))) / 365 AS INT) idade,
+u.genero
+FROM loja_web.omniture o
+INNER JOIN loja_web.produtos p
+ON o.url = p.url
+LEFT OUTER JOIN loja_web.usuarios u
+ON o.swid = concat('{', u.swid , '}');
+```
+Aqui está uma amostra de como ficou a tabela analise_logs pronta para ser usada nas análises pela equipe de negócios da empresa.
+
+![analise_logs](https://github.com/BrunoHarlis/loja_de_varejo_na_web/blob/main/imagens/analise_logs.png)
+
+Finalmente, como ultimo passo, vamos salvar essa tabela como um arquivo .csv no hdfs.
+```SQL
+INSERT OVERWRITE DIRECTORY 'hdfs:///tmp/analise_logs'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM loja_web.analise_logs;
+```
