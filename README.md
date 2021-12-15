@@ -1,10 +1,10 @@
 # Loja de Varejo na Web
  
 ## Descrição
-Veremos como carregar e consultar dados para uma loja fictícia de varejo na web derivando insights de grandes fontes de dados, como logs da web. Combinando web logs com dados de clientes mais tradicionais, podemos entender melhor os clientes e entender como otimizar futuras promoções e anúncios. Será descrito como inseri dados do HDFS, criar tabelas e consultas a partir do Hive.
+Nesse projeto será mostrado como carregar e consultar dados para uma loja fictícia de varejo na web derivando insights de grandes fontes de dados, como logs da web. Combinando web logs com dados de clientes mais tradicionais, podemos entender melhor os clientes e entender como otimizar futuras promoções e anúncios. Será descrito como inserir dados do HDFS, criar tabelas e realizar consultas a partir do Hive.
 
 ## Início
-Criaremos alguns diretórios no HDFS onde ficarão os aquivos que serivirão para montar o nosso banco de dados.
+Criaremos alguns diretórios no HDFS onde ficarão os aquivos que serivirão para montar o nosso database.
 
 ```Bash
 hdfs dfs -mkdir /tmp/loja_web/{omniture-logs, products, usuarios}
@@ -202,3 +202,6 @@ INSERT OVERWRITE DIRECTORY 'hdfs:///tmp/analise_logs'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT * FROM loja_web.analise_logs;
 ```
+
+## Conclusão
+Nesse projeto mostramos como é realizado o carregamento dos datasets no HDFS e em seguida como são usados para criar tabelas otimizadas no Hive. Manipulamos essas tabelas realizando filtros e junções para formar uma única tabela com todos os dados que serão relevantes para futuras análises de negócios.
